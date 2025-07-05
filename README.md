@@ -1,73 +1,61 @@
-# Welcome to your Lovable project
+# 🧠 NeuroTwin
 
-## Project info
+**Your Reflective AI for Mental Clarity**
 
-**URL**: https://lovable.dev/projects/342b3d8a-e43f-4067-9049-2a38b9becec6
+NeuroTwin is a multimodal mental health journaling app that creates a personalized "AI twin" — one that understands your emotions, detects patterns in your thoughts, and gently helps you reflect using Cognitive Behavioral Therapy (CBT) techniques.
 
-## How can I edit this code?
+> “It’s not just a journal. It’s a mirror that listens, learns, and evolves with you.”
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## 🚀 Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/342b3d8a-e43f-4067-9049-2a38b9becec6) and start prompting.
+### ✍️ Multimodal Journaling
+- Write freely or speak your thoughts (via voice-to-text with Whisper)
+- Upload memes or image-based thoughts — NeuroTwin extracts meaning using OCR + GPT-4 Vision
+- Optional daily prompts and reflections
 
-Changes made via Lovable will be committed automatically to this repo.
+### 💬 AI-Powered CBT Agent
+- GPT-4 analyzes your tone and suggests:
+  - Reframes for negative thoughts
+  - Gentle CBT-style questions
+  - Mental health exercises
 
-**Use your preferred IDE**
+### 🧠 Memory-Driven Responses
+- Long-term vector memory (via ChromaDB) lets the AI recall:
+  - What you journaled weeks ago
+  - Recurring stressors
+  - Emotional cycles
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 📊 Emotion Tracker Dashboard
+- View mood trends over time
+- Spot triggers and behavioral patterns
+- Get weekly summaries and affirmations
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 🔐 Privacy-First
+- All journals stored securely (Supabase/local optional)
+- Data never leaves your control unless shared
+- Optional encrypted mode for voice/text/image entries
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 🛠️ Tech Stack
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+| Layer       | Tool                            |
+|------------|----------------------------------|
+| Frontend   | Next.js, Tailwind CSS            |
+| Backend    | FastAPI or LangChain             |
+| LLM Agent  | OpenAI GPT-4                     |
+| Voice      | Whisper API                      |
+| Vision     | GPT-4 Vision / Tesseract OCR     |
+| Memory     | ChromaDB / Pinecone (Vector DB)  |
+| Auth/Data  | Supabase (optional)              |
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## ⚙️ Getting Started
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/342b3d8a-e43f-4067-9049-2a38b9becec6) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yourusername/neurotwin.git
+cd neurotwin
