@@ -1,16 +1,37 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Brain, Sparkles } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Brain, Sparkles, MessageCircleReply, Send } from 'lucide-react';
 
 interface AIResponseProps {
   response: string;
   emotion: string;
   timestamp: Date;
+  onReply?: (reply: string) => void;
 }
 
-const AIResponse: React.FC<AIResponseProps> = ({ response, emotion, timestamp }) => {
+const AIResponse: React.FC<AIResponseProps> = ({ response, emotion, timestamp, onReply }) => {
+  const [isReplying, setIsReplying] = useState(false);
+  const [replyText, setReplyText] = useState('');
+
+  const handleSubmitReply = () => {
+    if (replyText.trim() && onReply) {
+      onReply(replyText.trim());
+      setReplyText('');
+      setIsReplying(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmitReply();
+    }
+  };
+
   return (
     <Card className="p-6 bg-gradient-to-br from-purple-50 to-blue-50 border-purple-100 shadow-sm">
       <div className="space-y-4">
@@ -38,6 +59,52 @@ const AIResponse: React.FC<AIResponseProps> = ({ response, emotion, timestamp })
         <div className="bg-white/70 rounded-lg p-4">
           <p className="text-gray-800 leading-relaxed">{response}</p>
         </div>
+
+        {!isReplying ? (
+          <div className="flex justify-end">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsReplying(true)}
+              className="text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+            >
+              <MessageCircleReply className="h-4 w-4 mr-2" />
+              Reply
+            </Button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <Textarea
+              value={replyText}
+              onChange={(e) => setReplyText(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Reply to NeuroTwin..."
+              className="min-h-[80px] bg-white/80 border-purple-200 focus:border-purple-300"
+            />
+            <div className="flex justify-end gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setIsReplying(false);
+                  setReplyText('');
+                }}
+                className="border-purple-200"
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                onClick={handleSubmitReply}
+                disabled={!replyText.trim()}
+                className="gradient-bg text-white"
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Send
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </Card>
   );

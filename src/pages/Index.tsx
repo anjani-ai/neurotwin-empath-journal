@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import JournalEntry from '@/components/JournalEntry';
 import AIResponse from '@/components/AIResponse';
@@ -107,6 +106,33 @@ const Index = () => {
     }
   };
 
+  const handleReply = async (reply: string, entryId: string) => {
+    try {
+      const { response, emotion } = await generateAIResponse(reply);
+      
+      const replyEntry: JournalEntryData = {
+        id: Date.now().toString(),
+        content: reply,
+        timestamp: new Date(),
+        emotion,
+        aiResponse: response
+      };
+
+      setEntries(prev => [replyEntry, ...prev]);
+      
+      toast({
+        title: "Reply sent",
+        description: "NeuroTwin has responded to your message.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Unable to send reply. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
       {/* Header */}
@@ -180,6 +206,7 @@ const Index = () => {
                     response={entry.aiResponse}
                     emotion={entry.emotion}
                     timestamp={entry.timestamp}
+                    onReply={(reply) => handleReply(reply, entry.id)}
                   />
                 </div>
               ))}
