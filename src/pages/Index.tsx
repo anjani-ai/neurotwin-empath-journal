@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Brain, Heart, Sparkles, TrendingUp, Calendar, Shield } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { generateEmpathicResponse } from '@/utils/aiResponseEngine';
 
 interface JournalEntryData {
   id: string;
@@ -34,49 +35,13 @@ const Index = () => {
   ];
 
   const generateAIResponse = async (entry: string): Promise<{ response: string; emotion: string }> => {
-    // Simulate AI processing
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    // Simple emotion detection based on keywords
-    const emotions = {
-      'anxious': 'Anxious',
-      'worried': 'Worried', 
-      'stress': 'Stressed',
-      'happy': 'Happy',
-      'sad': 'Sad',
-      'excited': 'Excited',
-      'tired': 'Tired',
-      'grateful': 'Grateful',
-      'angry': 'Angry',
-      'confused': 'Confused'
-    };
-
-    const detectedEmotion = Object.keys(emotions).find(key => 
-      entry.toLowerCase().includes(key)
-    ) || 'thoughtful';
-
-    const responses = {
-      'anxious': "I can sense the anxiety in your words. Remember that anxiety often comes from our mind's attempt to protect us, but sometimes it can feel overwhelming. What specific thoughts are contributing to this feeling? Let's explore them together.",
-      'worried': "It sounds like you're carrying some heavy concerns. Worry can be productive when it leads to action, but destructive when it spirals. What's one small step you could take today to address what's worrying you?",
-      'stress': "I hear that you're feeling stressed. Stress affects both our mind and body. Have you noticed any physical tension? Sometimes taking deep breaths or doing a quick body scan can help reset our nervous system.",
-      'happy': "It's wonderful to hear the joy in your words! Happiness is precious - what specifically brought you this feeling today? Acknowledging these moments helps us recognize what truly nurtures our wellbeing.",
-      'sad': "I can feel the sadness you're experiencing, and I want you to know that these feelings are valid. Sadness often signals that something meaningful to us needs attention. What do you think your sadness is trying to tell you?",
-      'excited': "Your excitement is contagious! It's beautiful when we find things that energize us. What aspects of this situation are most thrilling to you? Let's capture this positive energy.",
-      'tired': "Fatigue can be our mind and body's way of asking for rest or change. Are you tired physically, emotionally, or both? Sometimes understanding the type of tiredness helps us know what kind of restoration we need.",
-      'grateful': "Gratitude is such a powerful emotion for mental wellbeing. What you're sharing shows real awareness of the good in your life. How does focusing on gratitude shift your perspective?",
-      'angry': "Anger often masks other emotions like hurt, frustration, or feeling unheard. Your anger is valid - it's telling you something important. What boundary or value feels like it's being crossed?",
-      'confused': "Confusion can be uncomfortable, but it often comes before clarity. Sometimes our mind needs to process complexity before finding understanding. What questions are you sitting with right now?",
-      'default': "Thank you for sharing this with me. I can sense the depth of your experience through your words. Every feeling you have is valid and worth exploring. What would you like to understand better about this situation?"
-    };
-
-    const aiResponse = responses[detectedEmotion as keyof typeof responses] || responses.default;
+    const result = generateEmpathicResponse(entry, entries);
     
     setIsLoading(false);
-    return {
-      response: aiResponse,
-      emotion: emotions[detectedEmotion as keyof typeof emotions] || 'Reflective'
-    };
+    return result;
   };
 
   const handleJournalSubmit = async (content: string, type: 'text' | 'voice' | 'image') => {
